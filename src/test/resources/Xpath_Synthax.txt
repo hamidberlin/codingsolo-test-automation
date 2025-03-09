@@ -1,0 +1,119 @@
+📂 Grundstruktur:
+XPath navigiert durch die XML- oder HTML-Struktur mithilfe von Pfadelementen und Achsen.
+//tagname[@attribut='wert']
+
+📌 Grundlegende Selektoren:
+Ausdruck						Bedeutung
+/								Absoluter Pfad (ab Wurzelknoten)
+//								Relativer Pfad (überall im Dokument suchen)	
+.								Aktueller Knoten
+..								Elternknoten
+@								Attribut auswählen (@class, @id)
+📌 Beispiele:
+XPath	Beschreibung
+/html/body/div					Selektiert direkt das <div>-Element im Body
+//div							Selektiert alle <div>-Elemente im Dokument
+//div[@class='test']			Selektiert <div> mit class="test"
+//*[@id='main']					Jedes Element mit id="main"
+//input[@type='text']			Alle input-Felder mit type="text"
+//a[text()='Home']				Link mit exakt dem Text "Home"
+
+📌 XPath-Funktionen:
+Funktion						Bedeutung
+text()							Textinhalt eines Elements	
+contains(@attribut, 'wert')		Prüft, ob ein Attribut einen bestimmten Wert enthält
+starts-with(@attribut, 'wert')	Prüft, ob ein Attribut mit einem bestimmten Wert beginnt
+normalize-space(text())			Entfernt Leerzeichen am Anfang und Ende
+last()							Letztes Element einer Liste
+position()						Gibt die Position eines Elements zurück
+📌 Beispiele mit Funktionen:
+XPath										Beschreibung
+//div[contains(@class, 'header')]			<div> mit class, die "header" enthält
+//a[starts-with(@href, 'https')]			<a>-Tags, deren href mit "https" beginnt
+//li[position()=1]							Erstes <li>-Element
+//ul/li[last()]								Letztes <li>-Element einer Liste
+//p[normalize-space(text())='Hallo Welt']	<p>-Element mit genau "Hallo Welt"
+📌 Achsen (Axes):
+Mit Achsen navigierst du die Baumstruktur gezielt:
+Achse	Beschreibung
+child::							Kind-Elemente
+parent::						Eltern-Element
+ancestor::						Alle Vorfahren
+descendant::					Alle Nachkommen
+following::						Alle nachfolgenden Elemente
+preceding::						Alle vorhergehenden Elemente
+sibling::						Geschwister-Elemente
+🔸 Beispiel:
+//div/child::span
+→ Selektiert alle <span>-Kinder innerhalb eines <div>.
+
+📌 XPath-Kombinationen:
+Du kannst mehrere Bedingungen kombinieren:
+
+//input[@type='text' and @name='username']
+→ Findet ein Textfeld mit type="text" und name="username".
+
+//button[@class='btn' or @id='submit']
+→ Findet einen Button mit class="btn" ODER id="submit".
+
+
+XPath Cheatsheet – Schnellzugriff:
+
+//div                          → Alle `<div>`-Elemente  
+//div[1]                       → Erstes `<div>`-Element  
+//*[@id='test']               → Beliebiges Element mit `id="test"`  
+//a[contains(text(), 'Login')] → Link mit "Login" im Text  
+//input[@type='checkbox']      → Alle Checkboxen  
+//ul/li[position()=last()]     → Letztes `<li>` in einer Liste  
+
+
+Reguläre Ausdrücke (Regex)
+Reguläre Ausdrücke sind Muster, die zum Suchen und Manipulieren von Text verwendet werden. In XPath und CSS-Selektoren können sie helfen, gezielt Elemente auszuwählen, die bestimmten Textmustern entsprechen.
+
+🟢 XPath mit regulären Ausdrücken
+In XPath kannst du die Funktion contains(), starts-with(), oder sogar matches() nutzen:
+
+xpath
+Kopieren
+Bearbeiten
+//div[contains(@class, 'button')]
+➡️ Findet alle <div>-Elemente, deren class-Attribut das Wort button enthält.
+
+🔸 Mit matches() für Regex (XPath 2.0+):
+
+xpath
+Kopieren
+Bearbeiten
+//input[matches(@name, '^user.*')]
+➡️ Findet alle <input>-Elemente, bei denen der name mit „user“ beginnt.
+
+🟡 CSS-Selektoren mit partiellen Übereinstimmungen
+CSS-Selektoren unterstützen keine vollen regulären Ausdrücke, aber sie haben ähnliche Syntax für Teilvergleiche:
+
+^= → beginnt mit
+css
+Kopieren
+Bearbeiten
+input[name^="user"]
+➡️ Wählt <input>-Felder aus, deren name mit "user" beginnt.
+
+$= → endet mit
+css
+Kopieren
+Bearbeiten
+a[href$=".pdf"]
+➡️ Wählt <a>-Links aus, die auf .pdf enden.
+
+*= → enthält
+css
+Kopieren
+Bearbeiten
+div[class*="error"]
+➡️ Wählt <div>-Elemente aus, deren class das Wort „error“ irgendwo enthält.
+
+📊 XPath vs. CSS-Selektoren: Regex-Fähigkeiten
+XPath	CSS-Selektoren
+Regex-Unterstützung	✅ Vollständig (matches())	❌ Keine echte Regex
+Teilstringsuche	✅ contains() & starts-with()	✅ *=, ^=, $=
+Leistungsfähigkeit	🟡 Flexibler, aber langsamer	🟢 Schneller, aber eingeschränkt
+Wenn du komplexe Textmuster brauchst (z. B. E-Mail-Adressen), ist XPath mit matches() unschlagbar. Für einfache Teilvergleiche sind CSS-Selektoren schneller.

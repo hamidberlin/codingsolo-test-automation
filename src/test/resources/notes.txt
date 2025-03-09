@@ -1,0 +1,34 @@
+Regex:
+ISt optimal für Anwendungen, die eine generierte Value erzeugen wie z.B. JFX
+
+Oder
+
+Attribute die ein großen Text enthalten und man möchte nur ein bestimmten Wort davon filtern.
+
+
+
+
+XPATH
+
+//tagName[@attribute='value']
+
+//input[@name='username8383212']
+
+Reg
+
+//tagName[contains(@attribute,'value')]
+
+//input[contains(@name,'username')]
+
+
+CSS Selector
+
+tagName[attribute='value']
+
+input[name='password19291923']
+
+Reg
+
+tagName[attribute*='value']
+
+input[name*='password']
