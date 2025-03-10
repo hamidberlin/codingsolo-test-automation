@@ -31,8 +31,7 @@ public class TestWebElementCheckBoxSeleniumFirefox {
 	@Test
 	public void testCheckBox() {
 		System.out.println("Starte Test CheckBox der WebElemente Beispielseite");
-		//Aufbau eine UnitTests
-		
+				
 		//Arrange
 		WebElement inputUsername = driver.findElement(By.cssSelector("#__ac_name"));
 		inputUsername.sendKeys("selenium42");
@@ -44,7 +43,7 @@ public class TestWebElementCheckBoxSeleniumFirefox {
 		WebElement btnLogin = driver.findElement(By.xpath("//input[@value=\'Anmelden\']"));
 		btnLogin.click();
 		
-		//Navigation
+		
 		WebElement btnMenu = driver.findElement(By.id("portaltab-burger-menu"));
 		btnMenu.click();
 		

@@ -50,6 +50,10 @@ public class SeleniumTestForm1Page {
 		PageFactory.initElements(driver, this);
 	}
 	
+	public String ueberschriftAuslesen() {
+		return testFormHeadline.getText();
+	}
+	
 	public void betreffEingeben(String betreff) {
 		inputBetreff.sendKeys("Automatisierte Test");
 		

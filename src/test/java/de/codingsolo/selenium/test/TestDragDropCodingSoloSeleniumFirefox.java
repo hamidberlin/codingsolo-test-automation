@@ -60,24 +60,19 @@ public class TestDragDropCodingSoloSeleniumFirefox {
 
 		// Act
 		
-		// Je nach Application hat man bei Drag and Drop 3 verschieden Möglichkeiten: siehe unten "dragAndDrop 1-3"
-		//1-Drag and Drop: Drag and Drop mit zwei Elementen angeben: a.Source Element und Target Element
 		action.dragAndDrop(drgLogoGreen, drpBox).build().perform();
 		action.dragAndDrop(drgLogoGreen, drpBox).build().perform();	
 		
-		//2-Drag and Drop: Drag and Drop bei OffSet: Source Element soll in die Position X und Y verschoben werden
+		
 		action.dragAndDropBy(drgLogoBlue, 250, 20).build().perform();
 		
-		//3-Drag and Drop: Drag and Drop mit zwei Elementen angeben: Alles Händisch durchführen, d.h. 
-		//-clickAndHold auf das Element ausführen
 		action.clickAndHold(drgLogoWhite).build().perform();
-		//-Bewegung auf der X-Y-Achse durchführen
+		
 		action.moveByOffset(250, 45).perform();
-		//-Mause Zeiger loslassen in unserem Fall drgLogoWhite los lassen
+		
 		action.release(drgLogoWhite).perform();
 		
-		//action.clickAndHold(drgLogoWhite).moveByOffset(250, 45).release(drgLogoWhite).perform();
-		
+			
 		// Assert: Erfolgsmeldung prüfen
 		
 		String erfolgsMeldung = driver.findElement(By.cssSelector("#droppable > p")).getText();

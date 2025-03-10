@@ -20,7 +20,7 @@ public class TestNavigationCodingSoloSeleniumFirefox {
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
+		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
@@ -35,27 +35,16 @@ public class TestNavigationCodingSoloSeleniumFirefox {
 	@Test
 	public void testNavigation() {
 		System.out.println("Starte Test Navigation");
-		//Aufbau eine UnitTests
+	
 		
 		//Arrange
-		//-LoginPage Webelemente
-		/*
-		driver.findElement(By.cssSelector("input.form-control[type='text']")).sendKeys("selenium42");
-		driver.findElement(By.cssSelector("input.form-control[type='password']")).sendKeys("R5vxI0j60");
-		driver.findElement(By.cssSelector("input.btn-primary")).click();	
-		*/		
+
 		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
 		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
 		loginPage.loginButtonAnklicken();
-	
 		
 		//Act
-		//-Navigation bis zum Formular
-		/*
-		driver.findElement(By.id("portaltab-burger-menu")).click();
-		driver.findElement(By.linkText("Selenium Testapplikationen")).click();
-		driver.findElement(By.linkText("Selenium Test Form1")).click();
-		*/
+
 		SeleniumHomePage homePage = new SeleniumHomePage(driver);
 		homePage.btnMenuAusklappen();
 		homePage.seleniumTestLinkAnklicken();
@@ -64,13 +53,10 @@ public class TestNavigationCodingSoloSeleniumFirefox {
 		testAppPage.testForm1Anklicken();
 		
 		//Assert
-		//-Überschrift der Formular mit der erwarteten Wert
-		/*
-		String erfolgsMeldung = driver.findElement(By.tagName("h1")).getText();
-		assertEquals(erfolgsMeldung, "Selenium Test Form1");
-		*/
+	
 		SeleniumTestForm1Page testForm1Page = new SeleniumTestForm1Page(driver);
-		String erfolgsMeldung = testForm1Page.erstesListenElementAuslesen();
+		
+		String erfolgsMeldung = testForm1Page.ueberschriftAuslesen();
 		assertEquals(erfolgsMeldung, "Selenium Test Form1");
 		
 	}

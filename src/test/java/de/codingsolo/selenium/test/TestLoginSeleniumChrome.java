@@ -33,17 +33,16 @@ public class TestLoginSeleniumChrome {
 		//Aufbau eine UnitTests
 		
 		//Arrange
-		
-		//driver.findElement(By.id("__ac_name")).sendKeys("Benutzer");
-		//driver.findElement(By.name("__ac_password")).sendKeys("test");
-		
+				
 		driver.findElement(By.cssSelector("#__ac_name")).sendKeys("selenium42");
 		driver.findElement(By.xpath("//input[@id='__ac_password']")).sendKeys("R5vxI0j60");
 		
 		//Act
+		
 		driver.findElement(By.xpath("//input[@value=\'Anmelden\']")).click();
 		
 		//Assert
+		
 		String willkommenMeldung = driver.findElement(By.cssSelector(".portalMessage")).getText();
 		assertTrue(willkommenMeldung.contains("Willkommen! Sie sind nun angemeldet."));
 	}

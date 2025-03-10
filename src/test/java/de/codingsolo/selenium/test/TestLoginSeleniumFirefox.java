@@ -33,13 +33,16 @@ public class TestLoginSeleniumFirefox {
 		System.out.println("Starte Test Login");
 		
 		//Arrange
+		
 		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
 		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
 		
 		//Act
+		
 		loginPage.loginButtonAnklicken();
 		
 		//Assert
+		
 		String erfolgsMeldung = loginPage.statusMeldungAuslesen();
 		assertTrue(erfolgsMeldung.contains("Willkommen!"));
 	}
