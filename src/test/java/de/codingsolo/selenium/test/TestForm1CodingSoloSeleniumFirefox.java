@@ -9,6 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import de.codingsolo.selenium.pages.SeleniumHomePage;
+import de.codingsolo.selenium.pages.SeleniumLoginPage;
+import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
+import de.codingsolo.selenium.pages.SeleniumTestForm1Page;
+
 public class TestForm1CodingSoloSeleniumFirefox {
 	
 	WebDriver driver;
@@ -16,7 +21,7 @@ public class TestForm1CodingSoloSeleniumFirefox {
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
+		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
@@ -25,53 +30,53 @@ public class TestForm1CodingSoloSeleniumFirefox {
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
-		driver.quit(); // Nutze quit statt close!
+		driver.quit(); 
 	}
 
 	@Test
 	public void testForm1() {
 		System.out.println("Starte Test Navigation");
 
-		// Arrange: 
+		//Arrange: 
 		
 		// Login
-		driver.findElement(By.cssSelector("input.form-control[type='text']")).sendKeys("selenium42");
-		driver.findElement(By.cssSelector("input.form-control[type='password']")).sendKeys("R5vxI0j60");
-		driver.findElement(By.cssSelector("input.btn-primary")).click();
+		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
+		
+		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
+		loginPage.loginButtonAnklicken();
 		
 		// Navigation zum Formular
-		driver.findElement(By.id("portaltab-burger-menu")).click();
-		driver.findElement(By.linkText("Selenium Testapplikationen")).click();
-		driver.findElement(By.linkText("Selenium Test Form1")).click();
+		SeleniumHomePage homePage = new SeleniumHomePage(driver);
+		
+		homePage.btnMenuAusklappen();
+		homePage.seleniumTestLinkAnklicken();
+		
+		SeleniumTestApplikationenPage testAppPage = new SeleniumTestApplikationenPage(driver);
+		testAppPage.testForm1Anklicken();
 		
 		// Starte Formular
-		driver.findElement(By.id("form-widgets-betreff")).sendKeys("Automatisierte Test");
-		driver.findElement(By.id("form-widgets-name")).sendKeys("Dieter");
-
-		Select dropDown1 = new Select(driver.findElement(By.id("form-widgets-auswahl1")));
-		dropDown1.selectByVisibleText("Selenium Automatisierung mit Dieter");
-
-		Select dropDown2 = new Select(driver.findElement(By.id("form-widgets-auswahl2-from")));
-		dropDown2.selectByIndex(2);
-		dropDown2.selectByIndex(4);
-		dropDown2.selectByIndex(6);
-
-		driver.findElement(By.name("from2toButton")).click();
-
-		Select dropDown3 = new Select(driver.findElement(By.id("form-widgets-auswahl2-to")));
-		dropDown3.selectByIndex(2);
-		driver.findElement(By.name("upButton")).click();
-
-		// Act: Formular speichern
+		SeleniumTestForm1Page testForm1Page = new SeleniumTestForm1Page(driver);
+		testForm1Page.betreffEingeben("Automatisierte Test");
+		testForm1Page.nameEingeben("Dieter");
 		
-		driver.findElement(By.name("form.buttons.speichern")).click();
-
-		// Assert: Erfolgsmeldung prüfen
+		testForm1Page.kursAuswaehlen("Selenium Automatisierung mit Dieter");
+	
+		testForm1Page.firmaInBox1Auswaehlen(new int[] {2, 4, 6});
+		testForm1Page.firmenUerbernehmen();
 		
-		String erfolgsMeldung = driver.findElement(By.id("message")).getText();
+		testForm1Page.firmaInBox2Auswaehlen(new int[] {2});
+		testForm1Page.ausgewählteFirmenNachObenVerschieben();
+		
+
+		//Act
+		testForm1Page.formularSpeichern();
+	
+		//Assert
+		
+		String erfolgsMeldung = testForm1Page.statusMeldungAuslesen();
 		assertTrue(erfolgsMeldung.contains("Kurs Selenium Automatisierung"));
 		
-		String erstesElement = driver.findElement(By.xpath("//ul[@id='companies']/li")).getText();
+		String erstesElement = testForm1Page.erstesListenElementAuslesen();
 		assertEquals(erstesElement, "Magazzini Alimentari Riuniti");
 	}
 }

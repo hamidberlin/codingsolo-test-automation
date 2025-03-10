@@ -7,45 +7,43 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 public class SeleniumTestForm1Page {
-	
-	private WebDriver driver;
-	
+
+	WebDriver driver;
+
 	@FindBy(tagName = "h1")
 	private WebElement testFormHeadline;
-	
-	@FindBy(css = "#form.widgets.betreff")
+
+	@FindBy(id = "form-widgets-betreff")
 	private WebElement inputBetreff;
-	
-	@FindBy(css = "#form-widgets-name")
+
+	@FindBy(id = "form-widgets-name")
 	private WebElement inputName;
-	
-	@FindBy(css = "form-widgets-auswahl1")
+
+	@FindBy(id = "form-widgets-auswahl1")
 	private WebElement selectKurs;
-	
+
 	@FindBy(id = "form-widgets-auswahl2-from")
 	private WebElement selectFirmaBox1;
-	
-	@FindBy(name= "from2toButton")
+
+	@FindBy(name = "from2toButton")
 	private WebElement btnAuswahlFirmaBox1;
-	
+
 	@FindBy(id = "form-widgets-auswahl2-to")
 	private WebElement selectFirmaBox2;
-	
+
 	@FindBy(name = "upButton")
 	private WebElement btnAuswahlObenBox2;
-	
+
 	@FindBy(name = "form.buttons.speichern")
 	private WebElement btnSpeicherDokument;
-	
+
 	@FindBy(id = "message")
-	private WebElement statusMeldung;
-	
-	@FindBy(xpath = "//ul[@id='companies']/li")
-	private WebElement textErstesElemtListeFirma;
-	
+	private WebElement StatusMeldung;
+
+	@FindBy(xpath = "//ul[@id='companies']/li[1]")
+	private WebElement textErstesElementListeFirma;
 
 	public SeleniumTestForm1Page(WebDriver driver) {
-		super();
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
@@ -53,52 +51,52 @@ public class SeleniumTestForm1Page {
 	public String ueberschriftAuslesen() {
 		return testFormHeadline.getText();
 	}
-	
+
 	public void betreffEingeben(String betreff) {
-		inputBetreff.sendKeys("Automatisierte Test");
-		
+		inputBetreff.sendKeys(betreff);
 	}
-	
+
 	public void nameEingeben(String name) {
-		inputName.sendKeys("Dieter");
+		inputName.sendKeys(name);
 	}
-	
+
 	public void kursAuswaehlen(String kursName) {
 		Select selectKurs = new Select(this.selectKurs);
 		selectKurs.selectByVisibleText(kursName);
 	}
-	
+
 	public void firmaInBox1Auswaehlen(int[] auswahl) {
 		Select selectFirma = new Select(this.selectFirmaBox1);
 		for (int i : auswahl) {
 			selectFirma.selectByIndex(i);
 		}
 	}
-	
-	public void firmenUebernehmen() {
+
+	public void firmenUerbernehmen() {
 		btnAuswahlFirmaBox1.click();
 	}
-	
+
 	public void firmaInBox2Auswaehlen(int[] auswahl) {
 		Select selectFirma = new Select(this.selectFirmaBox2);
 		for (int i : auswahl) {
 			selectFirma.selectByIndex(i);
 		}
 	}
-	
-	public void ausgewaehlteFirmenVerschieben() {
+
+	public void ausgewählteFirmenNachObenVerschieben() {
 		btnAuswahlObenBox2.click();
 	}
-	
+
 	public void formularSpeichern() {
 		btnSpeicherDokument.click();
 	}
-	
+
 	public String statusMeldungAuslesen() {
-		return statusMeldung.getText();
+		return StatusMeldung.getText();
 	}
 
 	public String erstesListenElementAuslesen() {
-		return textErstesElemtListeFirma.getText();
+		return textErstesElementListeFirma.getText();
 	}
+
 }
