@@ -9,6 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import de.codingsolo.selenium.pages.SeleniumHomePage;
+import de.codingsolo.selenium.pages.SeleniumLoginPage;
+import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
+import de.codingsolo.selenium.pages.SeleniumWebElementePage;
+
 public class TestWebElementCheckBoxSeleniumFirefox {
 	
 	WebDriver driver;
@@ -16,7 +21,7 @@ public class TestWebElementCheckBoxSeleniumFirefox {
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
+		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
@@ -25,7 +30,7 @@ public class TestWebElementCheckBoxSeleniumFirefox {
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
-		driver.close();
+		driver.quit();
 	}
 
 	@Test
@@ -33,42 +38,34 @@ public class TestWebElementCheckBoxSeleniumFirefox {
 		System.out.println("Starte Test CheckBox der WebElemente Beispielseite");
 				
 		//Arrange
-		WebElement inputUsername = driver.findElement(By.cssSelector("#__ac_name"));
-		inputUsername.sendKeys("selenium42");
 		
+		// Login
+		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
+		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
+		loginPage.loginButtonAnklicken();
 		
-		WebElement inputPassword =driver.findElement(By.xpath("//input[@id='__ac_password']"));
-		inputPassword.sendKeys("R5vxI0j60");
+		//Navigation
+		SeleniumHomePage homePage = new SeleniumHomePage(driver);
+		homePage.btnMenuAusklappen();
+		homePage.seleniumTestLinkAnklicken();
+
+		SeleniumTestApplikationenPage testAppPage = new SeleniumTestApplikationenPage(driver);
+		testAppPage.webElementeBeispielAnklicken();
 		
-		WebElement btnLogin = driver.findElement(By.xpath("//input[@value=\'Anmelden\']"));
-		btnLogin.click();
-		
-		
-		WebElement btnMenu = driver.findElement(By.id("portaltab-burger-menu"));
-		btnMenu.click();
-		
-		WebElement linkSideMenuSelenium = driver.findElement(By.linkText("Selenium Testapplikationen"));
-		linkSideMenuSelenium.click();
-		
-		WebElement linkWebElement = driver.findElement(By.linkText("Web Elemente"));
-		linkWebElement.click();
-		
-		WebElement checkBox1 = driver.findElement(By.id("checkBoxOption1"));
-		WebElement checkBox2 = driver.findElement(By.id("checkBoxOption2"));
-		WebElement checkBox3 = driver.findElement(By.id("checkBoxOption3"));
-		
-				
+		SeleniumWebElementePage webElemente = new SeleniumWebElementePage(driver);
+
+						
 		//Act
-		checkBox1.click();
-		checkBox1.click();
+		webElemente.checkBox1Anklicken();
+		webElemente.checkBox1Anklicken();
 		
-		checkBox2.click();
-		checkBox3.click();
-	
+		webElemente.checkBox2Anklicken();
+		webElemente.checkBox3Anklicken();
+		
 		//Assert
-		assertEquals(checkBox1.isSelected(), false);
-		assertEquals(checkBox2.isSelected(), true);
-		assertEquals(checkBox3.isSelected(), true);
+		assertEquals(webElemente.checkBox1StatusAuslesen(), false);
+		assertEquals(webElemente.checkBox2StatusAuslesen(), true);
+		assertEquals(webElemente.checkBox3StatusAuslesen(), true);
 		
 	}
 

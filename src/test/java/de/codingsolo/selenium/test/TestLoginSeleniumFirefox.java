@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import de.codingsolo.selenium.pages.SeleniumHomePage;
 import de.codingsolo.selenium.pages.SeleniumLoginPage;
 
 public class TestLoginSeleniumFirefox {
@@ -17,7 +18,7 @@ public class TestLoginSeleniumFirefox {
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
+		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
 		driver = new FirefoxDriver();
 		driver.get("https://seleniumkurs.codingsolo.de");
 	}
@@ -25,12 +26,12 @@ public class TestLoginSeleniumFirefox {
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
-		driver.close();
+		driver.quit();
 	}
 
 	@Test
 	public void testLogin() {
-		System.out.println("Starte Test Login");
+		System.out.println("Starte Test Login Erfolgreich");
 		
 		//Arrange
 		
@@ -43,7 +44,9 @@ public class TestLoginSeleniumFirefox {
 		
 		//Assert
 		
-		String erfolgsMeldung = loginPage.statusMeldungAuslesen();
+		SeleniumHomePage homepage= new SeleniumHomePage(driver);
+		
+		String erfolgsMeldung = homepage.statusMeldungAuslesen();
 		assertTrue(erfolgsMeldung.contains("Willkommen!"));
 	}
 

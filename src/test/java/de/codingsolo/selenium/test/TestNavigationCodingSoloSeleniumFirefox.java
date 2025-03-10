@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -29,7 +28,7 @@ public class TestNavigationCodingSoloSeleniumFirefox {
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
-		driver.close();
+		driver.quit();
 	}
 
 	@Test
