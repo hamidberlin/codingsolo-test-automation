@@ -9,6 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import de.codingsolo.selenium.pages.SeleniumHomePage;
+import de.codingsolo.selenium.pages.SeleniumIframePage;
+import de.codingsolo.selenium.pages.SeleniumLoginPage;
+import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
+
 public class TestIFrameSeleniumFirefox {
 	
 	WebDriver driver;
@@ -16,7 +21,7 @@ public class TestIFrameSeleniumFirefox {
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
+		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
@@ -31,45 +36,34 @@ public class TestIFrameSeleniumFirefox {
 	@Test
 	public void testIFrame() {
 		System.out.println("Starte Test iFrame");
-		//Aufbau eine UnitTests
 		
 		//Arrange
-		WebElement inputUsername = driver.findElement(By.cssSelector("#__ac_name"));
-		inputUsername.sendKeys("selenium42");
-		
-		
-		WebElement inputPassword =driver.findElement(By.xpath("//input[@id='__ac_password']"));
-		inputPassword.sendKeys("R5vxI0j60");
-		
-		WebElement btnLogin = driver.findElement(By.xpath("//input[@value=\'Anmelden\']"));
-		btnLogin.click();
+		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
+		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
+		loginPage.loginButtonAnklicken();
 		
 		//Navigation
-		WebElement btnMenu = driver.findElement(By.id("portaltab-burger-menu"));
-		btnMenu.click();
+		SeleniumHomePage homePage = new SeleniumHomePage(driver);
+		homePage.btnMenuAusklappen();
+		homePage.seleniumTestLinkAnklicken();
 		
-		WebElement linkSideMenuSelenium = driver.findElement(By.linkText("Selenium Testapplikationen"));
-		linkSideMenuSelenium.click();
+		SeleniumTestApplikationenPage testAppPage = new SeleniumTestApplikationenPage(driver);
+		testAppPage.iframeTestAnklicken();
 		
-		WebElement linkWebElement = driver.findElement(By.linkText("IFrame Beispiel"));
-		linkWebElement.click();
-		
-		driver.switchTo().frame("iframe");
-		
-		
-		WebElement inputName = driver.findElement(By.id("name"));
-		
-		WebElement btnAlert = driver.findElement(By.id("alertbtn"));
+		SeleniumIframePage iFramePage = new SeleniumIframePage(driver);
+		iFramePage.wechselZuIframe();
+
 						
 		//Act
-		inputName.sendKeys("Dieter");
-		btnAlert.click();
-
+		iFramePage.nameEintragen("Max");
+		iFramePage.alarmBtnAnklickken();
+		
 	
 		//Assert
-		assertTrue(driver.switchTo().alert().getText().contains("42"));
 		
-		driver.switchTo().alert().accept();
+		assertTrue(iFramePage.alarmNachrichtAuslesen().contains("Max"));
+		
+		iFramePage.alarmNachrichtSchliessen();
 
 	
 		

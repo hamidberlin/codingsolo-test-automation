@@ -1,1 +1,89 @@
+Eclipse
+
+.project
+.classpath
+.settings/
+
+Maven
+
 /target/
+*.iml
+
+IntelliJ IDEA
+
+.idea/
+*.ipr
+*.iws
+
+MacOS
+
+.DS_Store
+
+Logs
+
+*.log
+
+Environment
+
+*.env
+
+Java
+
+*.class
+*.jar
+
+Selenium WebDriver
+
+selenium-screenshot.png
+selenium.log
+
+Test Reports
+
+/test-output/
+/cucumber-reports/
+
+Node & npm (falls du z. B. WebDriver-Manager nutzt)
+
+node_modules/
+package-lock.json
+
+SSH & Schlüssel (falls du aus Versehen einen generierst)
+
+*.pem
+*.pub
+
+Sonstiges
+
+Thumbs.db
+.idea/
+*.bak
+*.swp
+
+Projektstruktur (dein spezifisches Setup)
+
+Kompilierte Klassen und Build-Dateien
+
+/target/
+/target/classes/
+/target/test-classes/
+
+Eclipse- und IntelliJ-Projektdateien
+
+.classpath
+.project
+.idea/
+
+Test-Output und Berichte
+
+/test-output/
+/cucumber-reports/
+
+Temporäre Dateien und Arbeitsdateien
+
+*.tmp
+*.swp
+*.bak
+
+Persönliche Notizen und lokale Texte
+
+src/test/resources/*.txt

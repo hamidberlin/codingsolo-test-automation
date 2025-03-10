@@ -19,6 +19,10 @@ public class SeleniumTestApplikationenPage {
 	
 	@FindBy(linkText = "Drag and Drop Beispiel")
 	private WebElement linkSeleniumDragDrop;
+	
+	// Link IFrame Test
+		@FindBy(linkText = "IFrame Beispiel")
+		private WebElement linkIframeTest;
 
 	public SeleniumTestApplikationenPage(WebDriver driver) {
 		this.driver = driver;
@@ -37,5 +41,8 @@ public class SeleniumTestApplikationenPage {
 		linkSeleniumDragDrop.click();
 	}
 	
+	public void iframeTestAnklicken() {
+		linkIframeTest.click();
+	}
 
 }
