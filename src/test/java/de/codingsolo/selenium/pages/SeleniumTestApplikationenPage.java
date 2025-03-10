@@ -16,9 +16,11 @@ public class SeleniumTestApplikationenPage {
 	// Link Test Form 1
 	@FindBy(linkText = "Selenium Test Form1")
 	private WebElement linkSeleniumTestForm1;
+	
+	@FindBy(linkText = "Drag and Drop Beispiel")
+	private WebElement linkSeleniumDragDrop;
 
 	public SeleniumTestApplikationenPage(WebDriver driver) {
-		super();
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
@@ -31,7 +33,9 @@ public class SeleniumTestApplikationenPage {
 		linkSeleniumTestForm1.click();
 	}
 	
-	
+	public void testDragDropAnklicken() {
+		linkSeleniumDragDrop.click();
+	}
 	
 
 }
