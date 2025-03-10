@@ -29,16 +29,15 @@ public class TestLoginFehlschlagFirefox {
 	@Test
 	public void testFehlLogin() {
 		System.out.println("Starte Test Login mit Fehlschlag");
-		//Aufbau eine UnitTests
 		
-		//Arrange
+		// Arrange
 		driver.findElement(By.id("__ac_name")).sendKeys("Benutzer");
 		driver.findElement(By.name("__ac_password")).sendKeys("test");
 		
-		//Act
+		// Act
 		driver.findElement(By.xpath("//input[@value=\'Anmelden\']")).click();
 		
-		//Assert
+		// Assert
 		String fehlerMeldung = driver.findElement(By.cssSelector("div.portalMessage:nth-child(1)")).getText();
 		assertTrue(fehlerMeldung.contains("Anmeldung fehlgeschlagen."));
 	}

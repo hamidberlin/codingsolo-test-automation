@@ -17,6 +17,12 @@ import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
 public class TestIFrameSeleniumFirefox {
 	
 	WebDriver driver;
+	
+	/**
+	 * Setzt die Testumgebung auf, initialisiert den Firefox WebDriver und öffnet die Testseite.
+	 * 
+	 * @throws Exception wenn die Initialisierung fehlschlägt
+	 */
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,23 +32,44 @@ public class TestIFrameSeleniumFirefox {
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
 	}
+	
+	/**
+	 * Schließt den WebDriver nach dem Test.
+	 * 
+	 * @throws Exception wenn das Schließen fehlschlägt
+	 */
 
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
 		driver.close();
 	}
+	
+	/**
+	 * Testfall: Interaktion mit einem iFrame.
+	 * 
+	 * Schritte:
+	 * 1. Login mit gültigen Zugangsdaten.
+	 * 2. Navigation zur iFrame-Testseite.
+	 * 3. Wechsel in den iFrame.
+	 * 4. Eingabe eines Namens und Auslösen eines Alerts.
+	 * 5. Überprüfung der Alarmnachricht.
+	 * 6. Schließen des Alerts.
+	 * 
+	 * Erwartetes Ergebnis:
+	 * - Die Alarmnachricht enthält den eingegebenen Namen.
+	 */
 
 	@Test
 	public void testIFrame() {
 		System.out.println("Starte Test iFrame");
 		
-		//Arrange
+		// Arrange
 		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
 		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
 		loginPage.loginButtonAnklicken();
 		
-		//Navigation
+		// Navigation
 		SeleniumHomePage homePage = new SeleniumHomePage(driver);
 		homePage.btnMenuAusklappen();
 		homePage.seleniumTestLinkAnklicken();
@@ -54,12 +81,12 @@ public class TestIFrameSeleniumFirefox {
 		iFramePage.wechselZuIframe();
 
 						
-		//Act
+		// Act
 		iFramePage.nameEintragen("Max");
 		iFramePage.alarmBtnAnklickken();
 		
 	
-		//Assert
+		// Assert
 		
 		assertTrue(iFramePage.alarmNachrichtAuslesen().contains("Max"));
 		

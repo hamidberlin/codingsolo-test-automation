@@ -15,6 +15,12 @@ import de.codingsolo.selenium.pages.SeleniumTestForm1Page;
 public class TestNavigationCodingSoloSeleniumFirefox {
 	
 	WebDriver driver;
+	
+	/**
+	 * Initialisiert den WebDriver und öffnet die Testseite.
+	 * 
+	 * @throws Exception wenn die Initialisierung fehlschlägt
+	 */
 
 	@Before
 	public void setUp() throws Exception {
@@ -25,24 +31,44 @@ public class TestNavigationCodingSoloSeleniumFirefox {
 		driver.get("https://seleniumkurs.codingsolo.de");
 	}
 
+	/**
+	 * Schließt den WebDriver nach dem Test.
+	 * 
+	 * @throws Exception wenn das Schließen fehlschlägt
+	 */
+	
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
 		driver.quit();
 	}
+	
+	/**
+	 * Testfall: Navigation durch die Applikation
+	 * 
+	 * Ziel: Überprüfen, ob die Navigation von der Startseite zur Testform-Seite funktioniert.
+	 * 
+	 * Schritte:
+	 * 1. Login auf der Startseite mit gültigen Zugangsdaten.
+	 * 2. Menü ausklappen und zur Testapplikationen-Seite navigieren.
+	 * 3. TestForm1 aufrufen.
+	 * 
+	 * Erwartetes Ergebnis:
+	 * - Die Überschrift auf der TestForm1-Seite lautet "Selenium Test Form1".
+	 */
 
 	@Test
 	public void testNavigation() {
 		System.out.println("Starte Test Navigation");
 	
 		
-		//Arrange
+		// Arrange
 
 		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
 		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
 		loginPage.loginButtonAnklicken();
 		
-		//Act
+		// Act
 
 		SeleniumHomePage homePage = new SeleniumHomePage(driver);
 		homePage.btnMenuAusklappen();
@@ -51,7 +77,7 @@ public class TestNavigationCodingSoloSeleniumFirefox {
 		SeleniumTestApplikationenPage testAppPage = new SeleniumTestApplikationenPage(driver);
 		testAppPage.testForm1Anklicken();
 		
-		//Assert
+		// Assert
 	
 		SeleniumTestForm1Page testForm1Page = new SeleniumTestForm1Page(driver);
 		

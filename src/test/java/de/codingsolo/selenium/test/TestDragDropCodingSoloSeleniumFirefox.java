@@ -14,6 +14,12 @@ import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
 public class TestDragDropCodingSoloSeleniumFirefox {
 	
 	WebDriver driver;
+	
+	/**
+	 * Setzt die Testumgebung auf, initialisiert den Firefox WebDriver und öffnet die Testseite.
+	 * 
+	 * @throws Exception wenn die Initialisierung fehlschlägt
+	 */
 
 	@Before
 	public void setUp() throws Exception {
@@ -23,12 +29,35 @@ public class TestDragDropCodingSoloSeleniumFirefox {
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
 	}
+	
+	/**
+	 * Schließt den WebDriver nach dem Test.
+	 * 
+	 * @throws Exception wenn das Schließen fehlschlägt
+	 */
 
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
 		driver.quit(); 
 	}
+	
+	/**
+	 * Testfall: Drag-and-Drop-Interaktion auf der Drag-and-Drop-Seite.
+	 * 
+	 * Schritte:
+	 * 1. Login mit gültigen Zugangsdaten.
+	 * 2. Navigation zur Drag-and-Drop-Testseite.
+	 * 3. Verschieben des weißen Logos in das Zielbox.
+	 * 4. Verschieben des blauen Logos in das Zielbox.
+	 * 5. Verschieben des roten Logos an eine benutzerdefinierte Position.
+	 * 6. Manuelles Verschieben des grünen Logos in das Zielbox.
+	 * 7. Verschieben aller Logos in das Zielbox.
+	 * 8. Überprüfung der Erfolgsmeldung, ob alle Logos korrekt platziert wurden.
+	 * 
+	 * Erwartetes Ergebnis:
+	 * - Die Erfolgsmeldung enthält den Text "coding-logo", was anzeigt, dass alle Logos korrekt verschoben wurden.
+	 */
 
 	@Test
 	public void testDragDrop() {

@@ -17,6 +17,12 @@ import de.codingsolo.selenium.pages.SeleniumTestForm1Page;
 public class TestForm1CodingSoloSeleniumFirefox {
 	
 	WebDriver driver;
+	
+	/**
+	 * Initialisiert den WebDriver und öffnet die Testseite.
+	 * 
+	 * @throws Exception wenn die Initialisierung fehlschlägt
+	 */
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,6 +32,13 @@ public class TestForm1CodingSoloSeleniumFirefox {
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
 	}
+	
+	
+	/**
+	 * Schließt den WebDriver nach dem Test.
+	 * 
+	 * @throws Exception wenn das Schließen fehlschlägt
+	 */
 
 	@After
 	public void tearDown() throws Exception {
@@ -33,11 +46,31 @@ public class TestForm1CodingSoloSeleniumFirefox {
 		driver.quit(); 
 	}
 
+	/**
+	 * Testfall: Ausfüllen und Absenden von TestForm1
+	 * 
+	 * Ziel: Überprüfen, ob das Formular korrekt ausgefüllt, gespeichert und die Erfolgsmeldung angezeigt wird.
+	 * 
+	 * Schritte:
+	 * 1. Login auf der Startseite mit gültigen Zugangsdaten.
+	 * 2. Navigation zur Testformular-Seite.
+	 * 3. Eingabe der Formulardaten:
+	 *    - Betreff
+	 *    - Name
+	 *    - Kursauswahl
+	 *    - Firmenauswahl und Verschieben in der Liste
+	 * 4. Speichern des Formulars.
+	 * 
+	 * Erwartetes Ergebnis:
+	 * - Die Statusmeldung enthält den Text "Kurs Selenium Automatisierung".
+	 * - Das erste Listenelement entspricht "Magazzini Alimentari Riuniti".
+	 */
+
 	@Test
 	public void testForm1() {
 		System.out.println("Starte Test Navigation");
 
-		//Arrange: 
+		// Arrange: 
 		
 		// Login
 		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
@@ -68,10 +101,10 @@ public class TestForm1CodingSoloSeleniumFirefox {
 		testForm1Page.ausgewählteFirmenNachObenVerschieben();
 		
 
-		//Act
+		// Act
 		testForm1Page.formularSpeichern();
 	
-		//Assert
+		// Assert
 		
 		String erfolgsMeldung = testForm1Page.statusMeldungAuslesen();
 		assertTrue(erfolgsMeldung.contains("Kurs Selenium Automatisierung"));

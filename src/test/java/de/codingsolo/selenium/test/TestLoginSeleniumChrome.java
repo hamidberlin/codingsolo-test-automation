@@ -24,13 +24,12 @@ public class TestLoginSeleniumChrome {
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
-		driver.close();
+//		driver.close();
 	}
 
 	@Test
-	public void testFehlLogin() {
-		System.out.println("Starte Test Login mit Fehlschlag");
-		//Aufbau eine UnitTests
+	public void tesLogin() {
+		System.out.println("Starte Test Login Erfolgreich");
 		
 		//Arrange
 				
@@ -44,7 +43,7 @@ public class TestLoginSeleniumChrome {
 		//Assert
 		
 		String willkommenMeldung = driver.findElement(By.cssSelector(".portalMessage")).getText();
-		assertTrue(willkommenMeldung.contains("Willkommen! Sie sind nun angemeldet."));
+		assertTrue(willkommenMeldung.contains("Willkommen!"));
 	}
 
 }

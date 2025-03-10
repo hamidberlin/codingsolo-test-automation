@@ -17,6 +17,12 @@ import de.codingsolo.selenium.pages.SeleniumWebElementePage;
 public class TestWebElementCheckBoxSeleniumFirefox {
 	
 	WebDriver driver;
+	
+	/**
+	 * Setzt die Testumgebung auf, initialisiert den Firefox WebDriver und öffnet die Testseite.
+	 * 
+	 * @throws Exception wenn die Initialisierung fehlschlägt
+	 */
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,12 +32,35 @@ public class TestWebElementCheckBoxSeleniumFirefox {
 		driver.manage().window().maximize();
 		driver.get("https://seleniumkurs.codingsolo.de");
 	}
+	
+	/**
+	 * Schließt den WebDriver nach dem Test.
+	 * 
+	 * @throws Exception wenn das Schließen fehlschlägt
+	 */
 
 	@After
 	public void tearDown() throws Exception {
 		System.out.println("Test abgeschlossen. - Aufräumen");
 		driver.quit();
 	}
+	
+	/**
+	 * Testfall: Interaktion mit Checkboxes auf der WebElemente Beispielseite.
+	 * 
+	 * Schritte:
+	 * 1. Login mit gültigen Zugangsdaten.
+	 * 2. Navigation zur WebElemente Beispielseite.
+	 * 3. Klicken auf die erste Checkbox, um ihren Status zu ändern, und erneut klicken, um ihren Status zurückzusetzen.
+	 * 4. Klicken auf die zweite und dritte Checkbox.
+	 * 5. Überprüfung des Status der Checkboxes.
+	 * 
+	 * Erwartetes Ergebnis:
+	 * - Die erste Checkbox sollte nach zweimaligem Klicken den Status "unchecked" (false) haben.
+	 * - Die zweite Checkbox sollte nach einmaligem Klicken den Status "checked" (true) haben.
+	 * - Die dritte Checkbox sollte nach einmaligem Klicken ebenfalls den Status "checked" (true) haben.
+	 */
+
 
 	@Test
 	public void testCheckBox() {
