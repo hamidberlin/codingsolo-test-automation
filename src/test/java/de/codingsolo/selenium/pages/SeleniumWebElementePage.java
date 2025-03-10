@@ -17,6 +17,15 @@ public class SeleniumWebElementePage {
 	
 	@FindBy(id = "checkBoxOption3")
 	private WebElement checkBox3;
+	
+	@FindBy(css = "input[value='radio1")
+	private WebElement redio1Btn;
+	
+	@FindBy(css = "input[value='radio2")
+	private WebElement redio2Btn;
+	
+	@FindBy(css = "input[value='radio3")
+	private WebElement redio3Btn;
 
 	public SeleniumWebElementePage(WebDriver driver) {
 		this.driver = driver;
@@ -47,4 +56,27 @@ public class SeleniumWebElementePage {
 		return checkBox3.isSelected();
 	}
 
+	public void radioButton1Anklicken() {
+		redio1Btn.click();
+	}
+	
+	public void radioButton2Anklicken() {
+		redio2Btn.click();
+	}
+	
+	public void radioButton3Anklicken() {
+		redio3Btn.click();
+	}
+	
+	public String radioButton1getAttribute(String attributname) {
+		return redio1Btn.getAttribute(attributname);
+	}
+	
+	public String radioButton2getAttribute(String attributname) {
+		return redio2Btn.getAttribute(attributname);
+	}
+	
+	public String radioButton3getAttribute(String attributname) {
+		return redio3Btn.getAttribute(attributname);
+	}
 }
