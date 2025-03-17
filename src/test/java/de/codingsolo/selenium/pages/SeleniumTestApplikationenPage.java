@@ -28,6 +28,14 @@ public class SeleniumTestApplikationenPage {
 	// WebElement für den Link zu den "Web Elementen" Beispielen
 	@FindBy(linkText = "Web Elemente")
 	private WebElement linkWebElemente;
+	
+	// Link Katzensuche Testseite (AJAX)
+	@FindBy(linkText = "Katzensuche Testseite (AJAX)")
+	private WebElement linkWebElementKatzensuche;
+	
+	// Link TestForm3 Data Driven
+	@FindBy(linkText = "Testform3 DataDriven")
+	private WebElement linkTestForm3;
 
 	// Konstruktor zur Initialisierung der WebElemente auf dieser Seite
 	public SeleniumTestApplikationenPage(WebDriver driver) {
@@ -58,6 +66,16 @@ public class SeleniumTestApplikationenPage {
 	// Methode, die auf den Link "Web Elemente" klickt, um die Web-Elemente-Seite zu öffnen
 	public void webElementeBeispielAnklicken() {
 		linkWebElemente.click(); // Klickt auf den Link "Web Elemente"
+	}
+
+	public void linkTextKatzenSucheAnklicken() {
+		linkWebElementKatzensuche.click();
+		
+	}
+	
+	public void linkTestForm3Anklicken() {
+		linkTestForm3.click();
+		
 	}
 
 }

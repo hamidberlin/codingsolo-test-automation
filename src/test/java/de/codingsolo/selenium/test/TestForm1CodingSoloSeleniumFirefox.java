@@ -1,44 +1,54 @@
 package de.codingsolo.selenium.test;
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
+import de.codingsolo.selenium.configuration.Config;
+import de.codingsolo.selenium.configuration.DriverHelper;
 import de.codingsolo.selenium.pages.SeleniumHomePage;
 import de.codingsolo.selenium.pages.SeleniumLoginPage;
 import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
 import de.codingsolo.selenium.pages.SeleniumTestForm1Page;
 
+@RunWith(Parameterized.class)
 public class TestForm1CodingSoloSeleniumFirefox {
 	
-	WebDriver driver;
-	
-	/**
-	 * Initialisiert den WebDriver und öffnet die Testseite.
-	 * 
-	 * @throws Exception wenn die Initialisierung fehlschlägt
-	 */
-
-	@Before
-	public void setUp() throws Exception {
-		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("https://seleniumkurs.codingsolo.de");
+	private WebDriver driver;
+    private final String browserName;
+    
+    
+	public TestForm1CodingSoloSeleniumFirefox(String browserName) {
+		super();
+		this.browserName = browserName;
 	}
+
+
+    @Before
+    public void setUp() {
+        System.out.println("Initialisiere WebDriver für: " + browserName);
+        driver = DriverHelper.getDriver(browserName);
+        driver.manage().window().maximize();
+        
+        try {
+            String baseUrl = Config.getBaseURL();
+            if (baseUrl == null || baseUrl.isEmpty()) {
+                throw new RuntimeException("Konfigurationsdatei ist leer oder ungültig");
+            }
+            driver.get(baseUrl);
+        } catch (Exception e) {
+            throw new RuntimeException("Fehler beim Laden der Konfiguration: " + e.getMessage(), e);
+        }
+    }
 	
-	
-	/**
-	 * Schließt den WebDriver nach dem Test.
-	 * 
-	 * @throws Exception wenn das Schließen fehlschlägt
-	 */
+
 
 	@After
 	public void tearDown() throws Exception {
@@ -46,25 +56,6 @@ public class TestForm1CodingSoloSeleniumFirefox {
 		driver.quit(); 
 	}
 
-	/**
-	 * Testfall: Ausfüllen und Absenden von TestForm1
-	 * 
-	 * Ziel: Überprüfen, ob das Formular korrekt ausgefüllt, gespeichert und die Erfolgsmeldung angezeigt wird.
-	 * 
-	 * Schritte:
-	 * 1. Login auf der Startseite mit gültigen Zugangsdaten.
-	 * 2. Navigation zur Testformular-Seite.
-	 * 3. Eingabe der Formulardaten:
-	 *    - Betreff
-	 *    - Name
-	 *    - Kursauswahl
-	 *    - Firmenauswahl und Verschieben in der Liste
-	 * 4. Speichern des Formulars.
-	 * 
-	 * Erwartetes Ergebnis:
-	 * - Die Statusmeldung enthält den Text "Kurs Selenium Automatisierung".
-	 * - Das erste Listenelement entspricht "Magazzini Alimentari Riuniti".
-	 */
 
 	@Test
 	public void testForm1() {
@@ -112,4 +103,11 @@ public class TestForm1CodingSoloSeleniumFirefox {
 		String erstesElement = testForm1Page.erstesListenElementAuslesen();
 		assertEquals(erstesElement, "Magazzini Alimentari Riuniti");
 	}
+	
+	 @Parameterized.Parameters(name = "0")
+	    public static Collection<Object[]> provideTestData() {
+	        return Arrays.asList(new Object[][]{
+	            {"firefox"}            
+	        });
+	    }
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -12,6 +14,7 @@ import de.codingsolo.selenium.pages.SeleniumLoginPage;
 import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
 import de.codingsolo.selenium.pages.SeleniumTestForm1Page;
 
+@RunWith(Parameterized.class)
 public class TestNavigationCodingSoloSeleniumFirefox {
 	
 	WebDriver driver;

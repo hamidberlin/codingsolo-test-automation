@@ -1,40 +1,52 @@
 package de.codingsolo.selenium.test;
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
+import de.codingsolo.selenium.configuration.Config;
+import de.codingsolo.selenium.configuration.DriverHelper;
 import de.codingsolo.selenium.pages.SeleniumDragDropPage;
 import de.codingsolo.selenium.pages.SeleniumHomePage;
 import de.codingsolo.selenium.pages.SeleniumLoginPage;
 import de.codingsolo.selenium.pages.SeleniumTestApplikationenPage;
 
+@RunWith(Parameterized.class)
 public class TestDragDropCodingSoloSeleniumFirefox {
 	
-	WebDriver driver;
+	private WebDriver driver;
+    private final String browserName;
 	
-	/**
-	 * Setzt die Testumgebung auf, initialisiert den Firefox WebDriver und öffnet die Testseite.
-	 * 
-	 * @throws Exception wenn die Initialisierung fehlschlägt
-	 */
 
-	@Before
-	public void setUp() throws Exception {
-		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.get("https://seleniumkurs.codingsolo.de");
+    
+	public TestDragDropCodingSoloSeleniumFirefox(String browserName) {
+		this.browserName = browserName;
 	}
 	
-	/**
-	 * Schließt den WebDriver nach dem Test.
-	 * 
-	 * @throws Exception wenn das Schließen fehlschlägt
-	 */
+
+    @Before
+    public void setUp() {
+        System.out.println("Initialisiere WebDriver für: " + browserName);
+        driver = DriverHelper.getDriver(browserName);
+        driver.manage().window().maximize();
+        
+        try {
+            String baseUrl = Config.getBaseURL();
+            if (baseUrl == null || baseUrl.isEmpty()) {
+                throw new RuntimeException("Konfigurationsdatei ist leer oder ungültig");
+            }
+            driver.get(baseUrl);
+        } catch (Exception e) {
+            throw new RuntimeException("Fehler beim Laden der Konfiguration: " + e.getMessage(), e);
+        }
+    }
 
 	@After
 	public void tearDown() throws Exception {
@@ -42,22 +54,6 @@ public class TestDragDropCodingSoloSeleniumFirefox {
 		driver.quit(); 
 	}
 	
-	/**
-	 * Testfall: Drag-and-Drop-Interaktion auf der Drag-and-Drop-Seite.
-	 * 
-	 * Schritte:
-	 * 1. Login mit gültigen Zugangsdaten.
-	 * 2. Navigation zur Drag-and-Drop-Testseite.
-	 * 3. Verschieben des weißen Logos in das Zielbox.
-	 * 4. Verschieben des blauen Logos in das Zielbox.
-	 * 5. Verschieben des roten Logos an eine benutzerdefinierte Position.
-	 * 6. Manuelles Verschieben des grünen Logos in das Zielbox.
-	 * 7. Verschieben aller Logos in das Zielbox.
-	 * 8. Überprüfung der Erfolgsmeldung, ob alle Logos korrekt platziert wurden.
-	 * 
-	 * Erwartetes Ergebnis:
-	 * - Die Erfolgsmeldung enthält den Text "coding-logo", was anzeigt, dass alle Logos korrekt verschoben wurden.
-	 */
 
 	@Test
 	public void testDragDrop() {
@@ -99,4 +95,11 @@ public class TestDragDropCodingSoloSeleniumFirefox {
 		assertTrue(erfolgsMeldung.contains("coding-logo"));
 
 	}
+	
+	 @Parameterized.Parameters(name = "0")
+	    public static Collection<Object[]> provideTestData() {
+	        return Arrays.asList(new Object[][]{
+	            {"firefox"}
+	        });
+	    }
 }

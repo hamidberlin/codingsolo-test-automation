@@ -1,75 +1,79 @@
 package de.codingsolo.selenium.test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
+import de.codingsolo.selenium.configuration.Config;
+import de.codingsolo.selenium.configuration.DriverHelper;
 import de.codingsolo.selenium.pages.SeleniumHomePage;
 import de.codingsolo.selenium.pages.SeleniumLoginPage;
 
-/**
- * Testfall: Erfolgreicher Login
- * 
- * Dieser Test überprüft, ob ein Benutzer sich erfolgreich mit gültigen
- * Zugangsdaten einloggen kann.
- * 
- * Vorbereitung:
- * - Die Login-Seite wird aufgerufen.
- * - Benutzername und Passwort werden eingegeben.
- * 
- * Schritte:
- * 1. Benutzername und Passwort eingeben.
- * 2. Login-Button anklicken.
- * 
- * Erwartetes Ergebnis:
- * - Die Startseite wird angezeigt.
- * - Eine Statusmeldung mit dem Text "Willkommen!" erscheint.
- * 
- * @author 
- * @version 
- * @since 
- */
-
+@RunWith(Parameterized.class)
 public class TestLoginSeleniumFirefox {
-	
-	WebDriver driver;
+    private WebDriver driver;
+    private final String browserName;
+    private final String username;
+    private final String password;
 
-	@Before
-	public void setUp() throws Exception {
-		System.out.println("Initialisiere Webdriver");
-		System.setProperty("webdriver.gecko.driver", "/opt/homebrew/bin/geckodriver");
-		driver = new FirefoxDriver();
-		driver.get("https://seleniumkurs.codingsolo.de");
-	}
+    public TestLoginSeleniumFirefox(String browserName, String username, String password) {
+        this.browserName = browserName;
+        this.username = username;
+        this.password = password;
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		System.out.println("Test abgeschlossen. - Aufräumen");
-		driver.quit();
-	}
+    @Before
+    public void setUp() {
+        System.out.println("Initialisiere WebDriver für: " + browserName);
+        driver = DriverHelper.getDriver(browserName);
+        driver.manage().window().maximize();
+        
+        try {
+            String baseUrl = Config.getBaseURL();
+            if (baseUrl == null || baseUrl.isEmpty()) {
+                throw new RuntimeException("Konfigurationsdatei ist leer oder ungültig");
+            }
+            driver.get(baseUrl);
+        } catch (Exception e) {
+            throw new RuntimeException("Fehler beim Laden der Konfiguration: " + e.getMessage(), e);
+        }
+    }
 
-	@Test
-	public void testLogin() {
-		System.out.println("Starte Test Login Erfolgreich");
-		
-		//Arrange
-		
-		SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
-		loginPage.zugangsdatenEingeben("selenium42", "R5vxI0j60");
-		
-		//Act
-		
-		loginPage.loginButtonAnklicken();
-		
-		//Assert
-		
-		SeleniumHomePage homepage= new SeleniumHomePage(driver);
-		
-		String erfolgsMeldung = homepage.statusMeldungAuslesen();
-		assertTrue(erfolgsMeldung.contains("Willkommen!"));
-	}
+    @After
+    public void tearDown() {
+        if (driver != null) {
+            System.out.println("Test abgeschlossen - Browser schließen");
+            driver.quit();
+        }
+    }
 
+    @Test
+    public void testLogin() {
+        System.out.println("Starte Test: Login erfolgreich");
+
+        SeleniumLoginPage loginPage = new SeleniumLoginPage(driver);
+        loginPage.zugangsdatenEingeben(username, password);
+        loginPage.loginButtonAnklicken();
+
+        SeleniumHomePage homepage = new SeleniumHomePage(driver);
+        String erfolgsMeldung = homepage.statusMeldungAuslesen();
+        assertTrue("Login Erfolgreich!", erfolgsMeldung.contains("Willkommen!"));
+    }
+
+    @Parameterized.Parameters(name = "0")
+    public static Collection<Object[]> provideTestData() {
+        return Arrays.asList(new Object[][]{
+            {"firefox", "selenium42", "R5vxI0j60"},
+            {"chrome", "selenium42", "R5vxI0j60"}
+        });
+    }
 }
+

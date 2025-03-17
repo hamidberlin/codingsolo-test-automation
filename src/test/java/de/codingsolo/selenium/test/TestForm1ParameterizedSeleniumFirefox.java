@@ -61,7 +61,7 @@ public class TestForm1ParameterizedSeleniumFirefox {
         System.out.println("Initialisiere Webdriver");
         driver = DriverHelper.getDriver(browsername);
         driver.manage().window().maximize();
-        driver.get(Config.getBasURL());
+        driver.get(Config.getBaseURL());
     }
 
     /**
