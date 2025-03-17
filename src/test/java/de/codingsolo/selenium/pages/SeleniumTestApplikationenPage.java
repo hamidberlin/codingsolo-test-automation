@@ -43,6 +43,7 @@ public class SeleniumTestApplikationenPage {
 		PageFactory.initElements(driver, this); // Initialisiert alle WebElemente dieser Seite
 	}
 	
+	
 	// Methode, die auf den Menü-Button klickt, um das Menü auszuklappen
 	public void btnMenuAusklappen() {
 		btnMenu.click(); // Klickt auf den Menü-Button

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 
 import de.codingsolo.selenium.configuration.Config;
@@ -96,7 +97,7 @@ public class TestDragDropCodingSoloSeleniumFirefox {
 
 	}
 	
-	 @Parameterized.Parameters(name = "0")
+	 @Parameters(name = "{0}")
 	    public static Collection<Object[]> provideTestData() {
 	        return Arrays.asList(new Object[][]{
 	            {"firefox"}

@@ -51,18 +51,47 @@ public class TestForm3ParameterizedSeleniumFirefox {
         this.assert2 = assert2;
     }
 
+    /**
+     * Die Methode wird vor jedem Testfall ausgeführt, um den WebDriver zu initialisieren und die Testumgebung vorzubereiten.
+     */
     @Before
     public void setUp() {
-        System.out.println("Initialisiere WebDriver");
+        // Gibt in der Konsole aus, welcher Browser initialisiert wird.
+        System.out.println("Initialisiere WebDriver für: " + browsername);
+        
+        // Holt eine WebDriver-Instanz für den angegebenen Browser (z. B. Firefox, Chrome).
         driver = DriverHelper.getDriver(browsername);
+        
+        // Maximiert das Browserfenster, um Probleme mit responsiven Layouts zu vermeiden.
         driver.manage().window().maximize();
-        driver.get(Config.getBaseURL()); 
+        
+        try {
+            // Ruft die Basis-URL aus der Konfiguration ab (z. B. aus einer properties-Datei oder einer Konstanten).
+            String baseUrl = Config.getBaseURL();
+            
+            // Prüft, ob die URL gültig ist (nicht null oder leer).
+            if (baseUrl == null || baseUrl.isEmpty()) {
+                throw new RuntimeException("Konfigurationsdatei ist leer oder ungültig");
+            }
+
+            // Öffnet die Webseite mit der abgerufenen URL.
+            driver.get(baseUrl);
+        } catch (Exception e) {
+            // Falls ein Fehler auftritt (z. B. die URL kann nicht geladen werden), wird eine Exception geworfen.
+            throw new RuntimeException("Fehler beim Laden der Konfiguration: " + e.getMessage(), e);
+        }
     }
 
+    /**
+     * Die Methode wird nach jedem Testfall ausgeführt, um den WebDriver zu schließen und Ressourcen freizugeben.
+     */
     @After
     public void tearDown() {
-        System.out.println("Test abgeschlossen. - Aufräumen");
+        // Prüft, ob der WebDriver noch existiert (nicht null).
         if (driver != null) {
+            System.out.println("Test abgeschlossen - Browser schließen");
+            
+            // Schließt den Browser und beendet die WebDriver-Session.
             driver.quit();
         }
     }
