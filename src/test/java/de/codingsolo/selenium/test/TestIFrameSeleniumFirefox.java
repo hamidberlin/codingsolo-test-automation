@@ -25,9 +25,10 @@ public class TestIFrameSeleniumFirefox {
     
     private WebDriver driver;
     private final String browsername;
-    private String username;
-    private String userpassword;
+    private final String username;
+    private final String userpassword;
     
+       
     /**
      * Konstruktor zur Initialisierung der Testparameter.
      * 

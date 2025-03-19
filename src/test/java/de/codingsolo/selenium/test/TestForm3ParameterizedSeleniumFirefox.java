@@ -2,8 +2,11 @@ package de.codingsolo.selenium.test;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +16,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 
+import de.codingsolo.selenium.configuration.Apache_POI;
 import de.codingsolo.selenium.configuration.Config;
 import de.codingsolo.selenium.configuration.DriverHelper;
 import de.codingsolo.selenium.pages.*;
@@ -143,17 +147,27 @@ public class TestForm3ParameterizedSeleniumFirefox {
     }
 
     @Parameters(name = "{0}")
-    public static Collection<Object[]> provideTestData() {
-        return Arrays.asList(new Object[][]{
-                {"TestForm3 Firefox", "firefox", "selenium42", "R5vxI0j60", "TestForm", "985566",
-                        "Max-Muster-Versicherung-Strasse", "555555", "Max Strasse 1", "40255", "Hamburg",
-                        "Arbeitnehmer", "Mustermann", "Max", "05.08.1980", "089-8958658", "Muster Strasse. 10",
-                        "80565", "München", "Erfolgreich gesendet", "Bestätigung erhalten"},
+	public static Collection<Object[]> provideTestData() throws Exception {
 
-//                {"TestForm3 Chrome", "chrome", "selenium42", "R5vxI0j60", "TestForm", "985566",
-//                        "Max-Muster-Versicherung-Strasse.1", "040-555555555", "Max Strasse 1", "40255", "Hamburg",
-//                        "Arbeitnehmer", "Mustermann", "Max", "05.08.1980", "089-8958658", "Muster Strasse. 10",
-//                        "80565", "München", "Erfolgreich gesendet", "Bestätigung erhalten"}
-        });
+		Collection<Object[]> collection;
+
+//		Object[][] daten = {
+//				{ "Test TestForm3 Testfall 1 FireFox", "firefox", "selenium102", "codingsolo", "Fragebogen 42",
+//						"9288282", "AOK Hamburg", "2131233", "Landwehr 23", "22119", "Hamburg", "Selbststaendiger",
+//						"Blomberg", "Hans", "02.04.1967", "12312312", "Reeperbarhn 222", "20537", "Hamburg", "Blomberg",
+//						"Fragebogen 42" },
+//				{ "Test TestForm3 Testfall 2 FireFox", "chrome", "selenium102", "codingsolo", "Fragebogen 42",
+//						"9288282", "AOK Hamburg", "2131233", "Landwehr 23", "22119", "Hamburg", "Selbststaendiger",
+//						"Blomberg", "Hans", "02.04.1967", "12312312", "Reeperbarhn 222", "20537", "Hamburg", "Blomberg",
+//						"Fragebogen 42" } };
+
+		//List<Object[]> listObjects = Arrays.asList(daten);
+		Apache_POI excelReader = new Apache_POI();
+		
+		List<Object[]> listObjects = excelReader.getExcelData("src/test/resources/TestCaseTestform3.xlsx");
+		collection = new ArrayList<Object[]>(listObjects);
+
+		return collection;
+        
     }
 }

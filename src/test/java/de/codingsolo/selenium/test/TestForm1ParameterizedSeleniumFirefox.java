@@ -24,7 +24,7 @@ import de.codingsolo.selenium.pages.*;
 public class TestForm1ParameterizedSeleniumFirefox {
 
     // WebDriver-Instanz für den Browser
-    WebDriver driver;
+    private WebDriver driver;
 
     // Testparameter für den parametrisierten Testlauf
     String browsername;
